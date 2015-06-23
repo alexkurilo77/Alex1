@@ -1,12 +1,8 @@
 <?php
 session_start();
+require_once 'logic/validators.php';
 require_once 'logic/functions.php';
 require_once 'logic/initialize.php';
-
-
-$request_uri = $_SERVER['REQUEST_URI'];
-preg_match_all('#/(\w*)#', $request_uri, $path);
-$path = $path[1];
 
 $routes = array(
 	'' 			=> 'home',

@@ -19,8 +19,25 @@ $s = &$_SESSION;
 
 $templates = array();
 
+if(!isset($s['user'])) $s['user'] = Null;
+
+if(!isset($s['flash'])) {
+	$s['flash'] = array(
+		'warning' 	=> array(),
+		'info'		=> array(),
+		'success'	=> array(),
+		'danger'	=> array()
+	);
+}
+
 define('TPL_DIR', 'tpl/');
 define('CONTROLLER_DIR', 'controller/');
+
+$request_uri = $_SERVER['REQUEST_URI'];
+preg_match_all('#/(\w*)#', $request_uri, $path);
+$path = $path[1];
+
+
 
 function initialize_db($conn){
 	global $db;
@@ -32,7 +49,7 @@ function initialize_tables($conn){
 	mysqli_query($conn,
 		"CREATE TABLE IF NOT EXISTS users(
 			id INT PRIMARY KEY AUTO_INCREMENT,
-			name VARCHAR(20),
+			name VARCHAR(20) UNIQUE,
 			password VARCHAR(40),
 			email VARCHAR(40),
 			email_hash VARCHAR(40)

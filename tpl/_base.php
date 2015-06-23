@@ -1,10 +1,10 @@
 <?php 
-global $templates;
+global $templates, $s;
 $action = "";
 $method = "GET";
 $form_parts = array();
 $submit = 'Submit';
-$flash = array();
+
 $form_classes = array('col-md-4', 'col-md-offset-4');
 include get_tpl('_header');
 

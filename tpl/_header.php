@@ -16,9 +16,15 @@
 <body>
 	<div class="navbar navbar-inverse">
 		<ul class="nav navbar-nav">
+		<?php if ($s['user']): ?>
+			<li><a href="/logout">Logout</a></li>
+		<?php else: ?>
 			<li><a href="/login">Login</a></li>
 			<li><a href="/register">Registration</a></li>
-
-			<li><a href="/logout">Logout</a></li>
+		<?php endif ?>
 		</ul>
+		<div class="navbar-brand pull-right"><?= $s['user'] ? $s['user']['name'] : 'Anon' ?></div>
+	</div>
+	<div class="container">
+		<?php display_flashes($s['flash']) ?>
 	</div>
