@@ -1,7 +1,7 @@
 <?php
 
 function route($name){
-	global $templates, $conn, $model, $g, $p, $s;
+	global $templates, $titles, $model, $path, $g, $p, $s;
 	include CONTROLLER_DIR."{$name}.php";
 }
 
@@ -10,9 +10,19 @@ function go_home(){
 	exit();
 }
 
+function go_here($path){
+	$addr = implode('/', $path);
+	header("Location: /{$addr}");
+	exit();
+}
+
 function not_found(){
 	header('Location: /not_found');
 	exit();
+}
+
+function arr_get($array, $key, $default = null){
+    return isset($array[$key]) ? $array[$key] : $default;
 }
 
 function get_tpl($tpl, $variables=null){
@@ -48,7 +58,7 @@ function validate($type, $p){
 function login_user($name, $password){
 	global $model, $s;
 	$password = md5($password);
-	$result = $model['user']['get_by'](array('name'=> "='$name'", 'password'=>"='$password'"));
+	$result = $model['user']['login']($name, $password);
 	if($result){
 		$user = mysqli_fetch_assoc($result);
 		$s['user'] = $user;

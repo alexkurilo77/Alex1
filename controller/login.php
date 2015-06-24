@@ -1,4 +1,7 @@
 <?php
+
+$titles[] = 'Login';
+
 if ($s['user']) {
 	add_flash('warning', "You are already logged in");
 	go_home();

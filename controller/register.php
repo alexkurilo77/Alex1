@@ -1,4 +1,7 @@
 <?php
+
+$titles[] = 'Register';
+
 if ($s['user']) {
 	add_flash('warning', "You can't create new users during the session");
 	go_home();

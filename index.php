@@ -12,6 +12,10 @@ $routes = array(
 	'login' 	=> 'login',
 	'logout'	=> 'logout',
 	'register'	=> 'register',
+	'blog'		=> 'blog',
+	'blogs'		=> 'blogs',
+	'post'		=> 'post',
+	'user'		=> 'user',
 	'not_found'	=> '404',
 );
 

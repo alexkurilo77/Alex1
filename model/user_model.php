@@ -1,6 +1,16 @@
 <?php
-$add_user_model = function(&$model) use ($conn) {
+$add_model = function(&$model) use ($conn) {
   $user = array();
+
+  mysqli_query($conn,
+    "CREATE TABLE IF NOT EXISTS users(
+      id INT PRIMARY KEY AUTO_INCREMENT,
+      name VARCHAR(20) UNIQUE,
+      password VARCHAR(40),
+      email VARCHAR(40),
+      email_hash VARCHAR(40)
+    )"
+  );
 
   $user['create'] = function($user) use ($conn){
     $name = $user['name'];
@@ -14,20 +24,19 @@ $add_user_model = function(&$model) use ($conn) {
     add_flash('success', "User created");
   };
 
-  $user['get_by'] = function($options) use ($conn){
-    $condition = array();
-    foreach ($options as $key => $value) {
-      $condition[] =  " $key $value ";
-    }
-    $condition = implode(' AND ', $condition);
-
-    $where = $condition ? 'WHERE '.$condition : '';
-    $result = mysqli_query($conn, "
-    SELECT * FROM users {$where}");
+  $user['login'] = function($name, $password) use ($conn){
+    $result = mysqli_query($conn, "SELECT * FROM users WHERE name='$name' AND password='$password'");
     return mysqli_num_rows($result) ? $result : False;
-
   };
+
+  $user['by_name'] = function($name) use ($conn){
+    $result = mysqli_query($conn, "SELECT * FROM users WHERE name='$name'");
+    $user = mysqli_fetch_assoc($result);
+    return $user;
+  };
+
   $model['user'] = $user;
 };
 
-$add_user_model($model);
+$add_model($model);
+unset($add_model);

@@ -20,6 +20,12 @@ function _create_validators(){
 		return $messages;
 	};
 
+	$validators['post'] = function(&$p) use ($Vpresence){
+		$messages = array();
+		$Vpresence($p, array('title', 'content'), $messages);
+		return $messages;
+	};
+
 	return $validators;
 }
 
